@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';  // Usa useNavigate
+import { useNavigate } from 'react-router-dom';
 
 const API_URL = 'http://127.0.0.1:8000/posts/';
 
@@ -7,7 +7,7 @@ const Home = () => {
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const navigate = useNavigate();  // Usa useNavigate
+  const navigate = useNavigate();
 
   const fetchPosts = async () => {
     try {
@@ -32,8 +32,12 @@ const Home = () => {
   };
 
   useEffect(() => {
-    fetchPosts();
-  }, []);
+    if (!localStorage.getItem('token')) {
+      navigate('/login');
+    } else {
+      fetchPosts();
+    }
+  }, [navigate]);
 
   const handleLogout = () => {
     localStorage.removeItem('token');

@@ -1,7 +1,7 @@
 // api.js
 const API_URL = 'http://127.0.0.1:8000';  // Cambia la URL según la configuración de tu backend
 
-// Función para realizar el login
+/* FUNCIÓN PARA EL LOGIN */
 export const login = async (username, password) => {
   try {
     const response = await fetch(`${API_URL}/api/token/`, {
@@ -24,4 +24,25 @@ export const login = async (username, password) => {
   }
 };
 
-// Aquí puedes agregar más funciones para otras solicitudes de la API
+
+
+/* FUNCIÓN PARA EL REGISTRO */
+
+export const register = async (username, email, password) => {
+  const response = await fetch(`${API_URL}/register`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({ username, email, password })
+  });
+
+  if (!response.ok) {
+    throw new Error('Error al registrar');
+  }
+
+  return await response.json();
+};
+
+// ... otras funciones de la API
+

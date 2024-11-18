@@ -1,13 +1,12 @@
 import React, { useState } from 'react';
 import { login } from '../services/api';
-import { useNavigate } from 'react-router-dom';  // Usa useNavigate
 
 const Login = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
-  const navigate = useNavigate();  // Usa useNavigate
+  const [isLoggedIn, setIsLoggedIn] = useState(false);  // Añade el estado isLoggedIn
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -20,20 +19,14 @@ const Login = () => {
       localStorage.setItem('token', data.access);
       localStorage.setItem('username', username);
 
-      // Redirigir a la página de Home
-      navigate('/home');
+      // Establecer el estado de logueado en verdadero
+      setIsLoggedIn(true);
     } catch (error) {
       console.error('Error al iniciar sesión:', error);
       setError(error.message);
     } finally {
       setLoading(false);
     }
-  };
-
-  const handleLogout = () => {
-    localStorage.removeItem('token');
-    localStorage.removeItem('username');
-    navigate('/login');
   };
 
   return (
@@ -59,6 +52,7 @@ const Login = () => {
       </form>
 
       {error && <p style={{ color: 'red' }}>{error}</p>}
+      {isLoggedIn && <p style={{ color: 'green' }}>Login exitoso. ¡Bienvenido!</p>}  {/* Mensaje de éxito */}
     </div>
   );
 };
