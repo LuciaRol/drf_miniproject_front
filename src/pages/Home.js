@@ -1,35 +1,45 @@
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';  // Usa useNavigate
 
-// API URL (asegúrate de que esta sea la correcta según tu configuración)
-const API_URL = 'http://localhost:8000/posts/';
+const API_URL = 'http://127.0.0.1:8000/posts/';
 
 const Home = () => {
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const navigate = useNavigate();  // Usa useNavigate
 
-  // Función para obtener los posts de la API
   const fetchPosts = async () => {
     try {
-      const response = await fetch(API_URL);
-      
+      const response = await fetch(API_URL, {
+        headers: {
+          'Authorization': `Bearer ${localStorage.getItem('token')}`
+        }
+      });
+
       if (!response.ok) {
         throw new Error('Error al obtener los posts');
       }
 
       const data = await response.json();
-      setPosts(data);  // Asumiendo que los posts están en el cuerpo de la respuesta
+      setPosts(data);
       setLoading(false);
     } catch (error) {
+      console.error('Error al obtener los posts:', error);
       setError(error.message);
       setLoading(false);
     }
   };
 
-  // Llamada a la API cuando el componente se monta
   useEffect(() => {
     fetchPosts();
   }, []);
+
+  const handleLogout = () => {
+    localStorage.removeItem('token');
+    localStorage.removeItem('username');
+    navigate('/login');
+  };
 
   if (loading) {
     return <div>Cargando...</div>;
@@ -41,6 +51,7 @@ const Home = () => {
 
   return (
     <div>
+      <button onClick={handleLogout}>Logout</button>
       <h1>Lista de Posts</h1>
       {posts.length === 0 ? (
         <p>No hay posts disponibles.</p>
@@ -59,4 +70,3 @@ const Home = () => {
 };
 
 export default Home;
-

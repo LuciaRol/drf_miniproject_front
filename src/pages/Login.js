@@ -1,14 +1,13 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { login } from '../services/api';
-
-const API_URL = 'http://127.0.0.1:8000//posts/';
+import { useNavigate } from 'react-router-dom';  // Usa useNavigate
 
 const Login = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState(null);
-  const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();  // Usa useNavigate
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -21,8 +20,8 @@ const Login = () => {
       localStorage.setItem('token', data.access);
       localStorage.setItem('username', username);
 
-      await fetchPosts();
-      window.location.href = '/login';
+      // Redirigir a la página de Home
+      navigate('/home');
     } catch (error) {
       console.error('Error al iniciar sesión:', error);
       setError(error.message);
@@ -34,34 +33,8 @@ const Login = () => {
   const handleLogout = () => {
     localStorage.removeItem('token');
     localStorage.removeItem('username');
-    window.location.href = '/login';
+    navigate('/login');
   };
-
-  const fetchPosts = async () => {
-    try {
-      const response = await fetch(API_URL, {
-        headers: {
-          'Authorization': `Bearer ${localStorage.getItem('token')}`
-        }
-      });
-
-      if (!response.ok) {
-        throw new Error('Error al obtener los posts');
-      }
-
-      const data = await response.json();
-      setPosts(data);
-    } catch (error) {
-      console.error('Error al obtener los posts:', error);
-      setError(error.message);
-    }
-  };
-
-  useEffect(() => {
-    if (localStorage.getItem('token')) {
-      fetchPosts();
-    }
-  }, []);
 
   return (
     <div>
@@ -86,25 +59,6 @@ const Login = () => {
       </form>
 
       {error && <p style={{ color: 'red' }}>{error}</p>}
-
-      {posts.length > 0 && (
-        <>
-          <button onClick={handleLogout}>Logout</button>
-          <h1>Lista de Posts</h1>
-          {posts.length === 0 ? (
-            <p>No hay posts disponibles.</p>
-          ) : (
-            <ul>
-              {posts.map((post) => (
-                <li key={post.id}>
-                  <h2>{post.title}</h2>
-                  <p>{post.body}</p>
-                </li>
-              ))}
-            </ul>
-          )}
-        </>
-      )}
     </div>
   );
 };
