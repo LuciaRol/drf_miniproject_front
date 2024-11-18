@@ -138,4 +138,26 @@ export const createPost = async (token, title, body) => {
   }
 };
 
-// ... otras funciones de la API
+/* FUNCIÓN PARA OBTENER LOS DETALLES DE UN POST */
+export const fetchPostDetails = async (token, postId) => {
+  try {
+    const response = await fetch(`${API_URL}/posts/${postId}/`, {
+      headers: {
+        'Authorization': `Bearer ${token}`
+      }
+    });
+
+    if (!response.ok) {
+      throw new Error('Error al obtener el post');
+    }
+
+    const data = await response.json();
+    return data;  // Retornamos los datos del post con sus comentarios
+
+  } catch (error) {
+    throw error;  // Lanzamos el error para que se maneje en otro lugar
+  }
+};
+
+// Otras funciones API como login, register, fetchProfile, updateProfile, fetchPosts, createPost...
+

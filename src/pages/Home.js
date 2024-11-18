@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 
 const API_URL = 'http://127.0.0.1:8000/posts/';
 
@@ -63,8 +63,13 @@ const Home = () => {
         <ul>
           {posts.map((post) => (
             <li key={post.id}>
-              <h2>{post.title}</h2>
+              <h2>
+                <Link to={`/posts/${post.id}`}>{post.title}</Link>
+              </h2>
               <p>{post.body}</p>
+              <p><strong>ID del Usuario:</strong> {post.user_id}</p>
+              <p><strong>Nombre del Usuario:</strong> {post.username}</p>
+              <p><strong>Número de Comentarios:</strong> {post.comments_count != null ? post.comments_count : '0'}</p>
             </li>
           ))}
         </ul>
