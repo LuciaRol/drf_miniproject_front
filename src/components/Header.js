@@ -16,6 +16,9 @@ const Header = () => {
           <li style={styles.navItem}>
             <NavLink to="/register" style={styles.navLink} activeStyle={styles.activeNavLink}>Register</NavLink>
           </li>
+          <li style={styles.navItem}> 
+            <NavLink to="/create-post" style={styles.navLink} activeStyle={styles.activeNavLink}>Create Post</NavLink> 
+          </li>
           <li style={styles.navItem}>
             <NavLink to="/profile" style={styles.navLink} activeStyle={styles.activeNavLink}>Profile</NavLink>
           </li>
