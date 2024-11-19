@@ -159,5 +159,33 @@ export const fetchPostDetails = async (token, postId) => {
   }
 };
 
-// Otras funciones API como login, register, fetchProfile, updateProfile, fetchPosts, createPost...
+
+
+/* FUNCIÓN PARA AÑADIR UN COMENTARIO A UN POST */
+export const addComment = async (token, postId, body, name, email) => {
+  try {
+    const response = await fetch(`${API_URL}/comments/`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      },
+      body: JSON.stringify({ 
+        post: postId, 
+        name: name, 
+        email: email, 
+        body })
+    });
+
+    if (!response.ok) {
+      throw new Error('Error al añadir el comentario');
+    }
+
+    const data = await response.json();
+    return data;  // Retornamos los datos del nuevo comentario
+
+  } catch (error) {
+    throw error;  // Lanzamos el error para que se maneje en otro lugar
+  }
+};
 

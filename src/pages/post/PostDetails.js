@@ -1,12 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { fetchPostDetails } from '../../services/api';
+import { fetchPostDetails, addComment } from '../../services/api';  // Asegúrate de importar la función addComment
 
 const PostDetails = () => {
   const { postId } = useParams();
   const [post, setPost] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [comment, setComment] = useState('');
+  const [commentError, setCommentError] = useState(null);
+  const [commentSuccess, setCommentSuccess] = useState(null);
 
   useEffect(() => {
     const token = localStorage.getItem('token');
@@ -26,6 +29,44 @@ const PostDetails = () => {
         });
     }
   }, [postId]);
+
+  const [name, setName] = useState('');
+const [email, setEmail] = useState('');
+
+const handleCommentSubmit = async (e) => {
+  e.preventDefault();
+
+  const token = localStorage.getItem('token');
+  if (!token) {
+    setCommentError('Debe estar logueado para comentar.');
+    return;
+  }
+
+  if (!name || !email) {
+    setCommentError('Nombre y correo son obligatorios.');
+    return;
+  }
+
+  try {
+    const data = await addComment(token, postId, comment, name, email);
+    setCommentSuccess('Comentario añadido exitosamente');
+    setComment('');
+    setName('');
+    setEmail('');
+    setCommentError(null);
+
+    // Actualizar los comentarios del post
+    setPost((prevPost) => ({
+      ...prevPost,
+      comments: [...prevPost.comments, data],
+    }));
+  } catch (error) {
+    console.error('Error al añadir el comentario:', error);
+    setCommentError('Error al añadir el comentario');
+    setCommentSuccess(null);
+  }
+};
+
 
   if (loading) {
     return <div>Cargando...</div>;
@@ -59,6 +100,32 @@ const PostDetails = () => {
           ))}
         </ul>
       )}
+        <h3>Añadir un comentario</h3>
+        {commentError && <p style={{ color: 'red' }}>{commentError}</p>}
+        {commentSuccess && <p style={{ color: 'green' }}>{commentSuccess}</p>}
+        <form onSubmit={handleCommentSubmit}>
+          <input
+            type="text"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            placeholder="Nombre"
+            required
+          />
+          <input
+            type="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            placeholder="Correo electrónico"
+            required
+          />
+          <textarea
+            value={comment}
+            onChange={(e) => setComment(e.target.value)}
+            placeholder="Escribe tu comentario aquí"
+            required
+          />
+          <button type="submit">Añadir Comentario</button>
+        </form>
     </div>
   );
 };
