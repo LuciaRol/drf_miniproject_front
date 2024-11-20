@@ -94,25 +94,7 @@ export const updateProfile = async (token, userId, username, email, password) =>
 };
 
 /* FUNCIÓN PARA OBTENER POSTS */
-export const fetchPosts = async (token) => {
-  try {
-    const response = await fetch(`${API_URL}/posts/`, {
-      headers: {
-        'Authorization': `Bearer ${token}`
-      }
-    });
 
-    if (!response.ok) {
-      throw new Error('Error al obtener los posts');
-    }
-
-    const data = await response.json();
-    return data;  // Retornamos los datos de los posts
-
-  } catch (error) {
-    throw error;  // Lanzamos el error para que se maneje en otro lugar
-  }
-};
 
 /* FUNCIÓN PARA CREAR UN POST */
 export const createPost = async (token, title, body) => {
@@ -188,4 +170,41 @@ export const addComment = async (token, postId, body, name, email) => {
     throw error;  // Lanzamos el error para que se maneje en otro lugar
   }
 };
+
+/* FUNCIÓN PARA ELIMINAR UN POST */
+export const deletePost = async (token, postId) => {
+  try {
+    const response = await fetch(`${API_URL}/posts/${postId}/`, {
+      method: 'DELETE',
+      headers: {
+        'Authorization': `Bearer ${token}`
+      }
+    });
+
+    if (!response.ok) {
+      throw new Error('Error al eliminar el post');
+    }
+  } catch (error) {
+    throw error;  // Lanzamos el error para que se maneje en otro lugar
+  }
+};
+
+/* FUNCIÓN PARA ELIMINAR UN COMENTARIO */
+export const deleteComment = async (token, commentId) => {
+  try {
+    const response = await fetch(`${API_URL}/comments/${commentId}/`, {
+      method: 'DELETE',
+      headers: {
+        'Authorization': `Bearer ${token}`
+      }
+    });
+
+    if (!response.ok) {
+      throw new Error('Error al eliminar el comentario');
+    }
+  } catch (error) {
+    throw error;  // Lanzamos el error para que se maneje en otro lugar
+  }
+};
+
 
