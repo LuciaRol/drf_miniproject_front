@@ -119,7 +119,11 @@ const PostDetails = () => {
 
     try {
       const updatedPost = await editPost(token, postId, editPostTitle, editPostBody);
-      setPost(updatedPost);
+      setPost((prevPost) => ({
+        ...prevPost,
+        title: updatedPost.title,
+        body: updatedPost.body
+      }));
       setEditMode(false);
     } catch (error) {
       console.error('Error al editar el post:', error);
@@ -269,6 +273,6 @@ const PostDetails = () => {
       </form>
     </div>
   );
-}
+}  
 
 export default PostDetails;
