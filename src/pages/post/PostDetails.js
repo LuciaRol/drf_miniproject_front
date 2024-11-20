@@ -12,14 +12,12 @@ const PostDetails = () => {
   const [commentError, setCommentError] = useState(null);
   const [commentSuccess, setCommentSuccess] = useState(null);
   const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
   const [editMode, setEditMode] = useState(false);
   const [editPostTitle, setEditPostTitle] = useState('');
   const [editPostBody, setEditPostBody] = useState('');
   const [editCommentId, setEditCommentId] = useState(null);
   const [editCommentBody, setEditCommentBody] = useState('');
   const [editCommentName, setEditCommentName] = useState('');
-  const [editCommentEmail, setEditCommentEmail] = useState('');
 
   useEffect(() => {
     const token = localStorage.getItem('token');
@@ -49,17 +47,16 @@ const PostDetails = () => {
       return;
     }
 
-    if (!name || !email) {
-      setCommentError('Nombre y correo son obligatorios.');
+    if (!name) {
+      setCommentError('Nombre es obligatorio.');
       return;
     }
 
     try {
-      const data = await addComment(token, postId, comment, name, email);
+      const data = await addComment(token, postId, comment, name);
       setCommentSuccess('Comentario añadido exitosamente');
       setComment('');
       setName('');
-      setEmail('');
       setCommentError(null);
 
       // Actualizar los comentarios del post
@@ -141,7 +138,7 @@ const PostDetails = () => {
     }
 
     try {
-      const updatedComment = await editComment(token, editCommentId, editCommentBody, editCommentName, editCommentEmail);
+      const updatedComment = await editComment(token, editCommentId, editCommentBody, editCommentName);
       setPost((prevPost) => ({
         ...prevPost,
         comments: prevPost.comments.map(comment =>
@@ -151,7 +148,6 @@ const PostDetails = () => {
       setEditCommentId(null);
       setEditCommentBody('');
       setEditCommentName('');
-      setEditCommentEmail('');
     } catch (error) {
       console.error('Error al editar el comentario:', error);
       setCommentError(error.message);
@@ -205,7 +201,7 @@ const PostDetails = () => {
         <p>No hay comentarios disponibles.</p>
       ) : (
         <ul>
-          {post.comments.map((comment) => (
+          {post.comments.sort((a, b) => new Date(b.created_at) - new Date(a.created_at)).map((comment) => (
             <li key={comment.id}>
               {editCommentId === comment.id ? (
                 <form onSubmit={handleEditComment}>
@@ -214,13 +210,6 @@ const PostDetails = () => {
                     value={editCommentName}
                     onChange={(e) => setEditCommentName(e.target.value)}
                     placeholder="Nombre"
-                    required
-                  />
-                  <input
-                    type="email"
-                    value={editCommentEmail}
-                    onChange={(e) => setEditCommentEmail(e.target.value)}
-                    placeholder="Correo electrónico"
                     required
                   />
                   <textarea
@@ -243,7 +232,6 @@ const PostDetails = () => {
                     setEditCommentId(comment.id); 
                     setEditCommentBody(comment.body); 
                     setEditCommentName(comment.name); 
-                    setEditCommentEmail(comment.email); 
                   }}>Editar Comentario</button>
                   <button onClick={() => handleDeleteComment(comment.id)}>Eliminar Comentario</button>
                 </div>
@@ -263,13 +251,6 @@ const PostDetails = () => {
           placeholder="Nombre"
           required
         />
-        <input
-          type="email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          placeholder="Correo electrónico"
-          required
-        />
         <textarea
           value={comment}
           onChange={(e) => setComment(e.target.value)}
@@ -280,6 +261,8 @@ const PostDetails = () => {
       </form>
     </div>
   );
+  
+
 };  
 
 
