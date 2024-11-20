@@ -237,6 +237,7 @@ const PostDetails = () => {
                   <p>
                     <strong>{comment.name || 'Anónimo'}:</strong> {comment.body}
                   </p>
+                  {comment.email && <p><strong>Correo electrónico:</strong> {comment.email}</p>}
                   <p><em>{new Date(comment.created_at).toLocaleString()}</em></p>
                   <button onClick={() => { 
                     setEditCommentId(comment.id); 
@@ -279,7 +280,7 @@ const PostDetails = () => {
       </form>
     </div>
   );
-};
+};  
 
 
 export default PostDetails;
