@@ -65,7 +65,7 @@ const PostDetails = () => {
       // Actualizar los comentarios del post
       setPost((prevPost) => ({
         ...prevPost,
-        comments: [...prevPost.comments, data],
+        comments: [...prevPost.comments, { ...data, name }], // Agregar el nombre en los comentarios
       }));
     } catch (error) {
       console.error('Error al añadir el comentario:', error);
@@ -193,9 +193,9 @@ const PostDetails = () => {
       ) : (
         <div>
           <h1>{post.title}</h1>
-          <p>{post.body}</p>{/* 
-          <p><strong>ID del Usuario:</strong> {post.user_id}</p> */}
-          <p><strong>Nombre del Usuario:</strong> {post.username}</p>
+          <p>{post.body}</p>
+          <p><strong>Autor:</strong> {post.username}</p>
+          <p><em>Creado en:</em> {new Date(post.created_at).toLocaleString()}</p>
           <button onClick={() => { setEditMode(true); setEditPostTitle(post.title); setEditPostBody(post.body); }}>Editar Post</button>
           <button onClick={handleDeletePost}>Eliminar Post</button>
         </div>
@@ -235,10 +235,15 @@ const PostDetails = () => {
               ) : (
                 <div>
                   <p>
-                    <strong>{comment.user && comment.user.username ? comment.user.username : 'Anónimo'}:</strong> {comment.body}
+                    <strong>{comment.name || 'Anónimo'}:</strong> {comment.body}
                   </p>
                   <p><em>{new Date(comment.created_at).toLocaleString()}</em></p>
-                  <button onClick={() => { setEditCommentId(comment.id); setEditCommentBody(comment.body); setEditCommentName(comment.name); setEditCommentEmail(comment.email); }}>Editar Comentario</button>
+                  <button onClick={() => { 
+                    setEditCommentId(comment.id); 
+                    setEditCommentBody(comment.body); 
+                    setEditCommentName(comment.name); 
+                    setEditCommentEmail(comment.email); 
+                  }}>Editar Comentario</button>
                   <button onClick={() => handleDeleteComment(comment.id)}>Eliminar Comentario</button>
                 </div>
               )}
@@ -274,6 +279,7 @@ const PostDetails = () => {
       </form>
     </div>
   );
-}  
+};
+
 
 export default PostDetails;
