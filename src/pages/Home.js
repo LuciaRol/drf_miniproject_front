@@ -68,9 +68,9 @@ const Home = () => {
               </h2>
               <p>{post.body}</p>
               {/* <p><strong>ID del Usuario:</strong> {post.user_id}</p> */}
-              <p><strong>Nombre del Usuario:</strong> {post.username}</p>
+              <p><strong>Autor:</strong> {post.username}</p>
               <p><strong>Creado en:</strong> {new Date(post.created_at).toLocaleString()}</p>
-              <p><strong>Número de Comentarios:</strong> {post.comments_count != null ? post.comments_count : '0'}</p>
+              <p><strong>Número de comentarios:</strong> {post.comments_count != null ? post.comments_count : '0'}</p>
             </li>
           ))}
         </ul>

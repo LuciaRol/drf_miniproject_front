@@ -193,8 +193,8 @@ const PostDetails = () => {
       ) : (
         <div>
           <h1>{post.title}</h1>
-          <p>{post.body}</p>
-          <p><strong>ID del Usuario:</strong> {post.user_id}</p>
+          <p>{post.body}</p>{/* 
+          <p><strong>ID del Usuario:</strong> {post.user_id}</p> */}
           <p><strong>Nombre del Usuario:</strong> {post.username}</p>
           <button onClick={() => { setEditMode(true); setEditPostTitle(post.title); setEditPostBody(post.body); }}>Editar Post</button>
           <button onClick={handleDeletePost}>Eliminar Post</button>
@@ -237,6 +237,7 @@ const PostDetails = () => {
                   <p>
                     <strong>{comment.user && comment.user.username ? comment.user.username : 'Anónimo'}:</strong> {comment.body}
                   </p>
+                  <p><em>{new Date(comment.created_at).toLocaleString()}</em></p>
                   <button onClick={() => { setEditCommentId(comment.id); setEditCommentBody(comment.body); setEditCommentName(comment.name); setEditCommentEmail(comment.email); }}>Editar Comentario</button>
                   <button onClick={() => handleDeleteComment(comment.id)}>Eliminar Comentario</button>
                 </div>
