@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { fetchPostDetails, addComment, deletePost, deleteComment } from '../../services/api';  // Asegúrate de importar las funciones necesarias
+import { fetchPostDetails, addComment, deletePost, deleteComment, editPost, editComment } from '../../services/api';
 
 const PostDetails = () => {
   const { postId } = useParams();
@@ -13,6 +13,13 @@ const PostDetails = () => {
   const [commentSuccess, setCommentSuccess] = useState(null);
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
+  const [editMode, setEditMode] = useState(false);
+  const [editPostTitle, setEditPostTitle] = useState('');
+  const [editPostBody, setEditPostBody] = useState('');
+  const [editCommentId, setEditCommentId] = useState(null);
+  const [editCommentBody, setEditCommentBody] = useState('');
+  const [editCommentName, setEditCommentName] = useState('');
+  const [editCommentEmail, setEditCommentEmail] = useState('');
 
   useEffect(() => {
     const token = localStorage.getItem('token');
@@ -103,6 +110,50 @@ const PostDetails = () => {
     }
   };
 
+  const handleEditPost = async () => {
+    const token = localStorage.getItem('token');
+    if (!token) {
+      setError('Debe estar logueado para editar el post.');
+      return;
+    }
+
+    try {
+      const updatedPost = await editPost(token, postId, editPostTitle, editPostBody);
+      setPost(updatedPost);
+      setEditMode(false);
+    } catch (error) {
+      console.error('Error al editar el post:', error);
+      setError(error.message);
+    }
+  };
+
+  const handleEditComment = async (e) => {
+    e.preventDefault();
+
+    const token = localStorage.getItem('token');
+    if (!token) {
+      setCommentError('Debe estar logueado para editar el comentario.');
+      return;
+    }
+
+    try {
+      const updatedComment = await editComment(token, editCommentId, editCommentBody, editCommentName, editCommentEmail);
+      setPost((prevPost) => ({
+        ...prevPost,
+        comments: prevPost.comments.map(comment =>
+          comment.id === editCommentId ? updatedComment : comment
+        ),
+      }));
+      setEditCommentId(null);
+      setEditCommentBody('');
+      setEditCommentName('');
+      setEditCommentEmail('');
+    } catch (error) {
+      console.error('Error al editar el comentario:', error);
+      setCommentError(error.message);
+    }
+  };
+
   if (loading) {
     return <div>Cargando...</div>;
   }
@@ -117,11 +168,34 @@ const PostDetails = () => {
 
   return (
     <div>
-      <h1>{post.title}</h1>
-      <p>{post.body}</p>
-      <p><strong>ID del Usuario:</strong> {post.user_id}</p>
-      <p><strong>Nombre del Usuario:</strong> {post.username}</p>
-      <button onClick={handleDeletePost}>Eliminar Post</button>
+      {editMode ? (
+        <div>
+          <input
+            type="text"
+            value={editPostTitle}
+            onChange={(e) => setEditPostTitle(e.target.value)}
+            placeholder="Título del Post"
+            required
+          />
+          <textarea
+            value={editPostBody}
+            onChange={(e) => setEditPostBody(e.target.value)}
+            placeholder="Contenido del Post"
+            required
+          />
+          <button onClick={handleEditPost}>Guardar Cambios</button>
+          <button onClick={() => setEditMode(false)}>Cancelar</button>
+        </div>
+      ) : (
+        <div>
+          <h1>{post.title}</h1>
+          <p>{post.body}</p>
+          <p><strong>ID del Usuario:</strong> {post.user_id}</p>
+          <p><strong>Nombre del Usuario:</strong> {post.username}</p>
+          <button onClick={() => { setEditMode(true); setEditPostTitle(post.title); setEditPostBody(post.body); }}>Editar Post</button>
+          <button onClick={handleDeletePost}>Eliminar Post</button>
+        </div>
+      )}
       <h2>Comentarios</h2>
       {post.comments.length === 0 ? (
         <p>No hay comentarios disponibles.</p>
@@ -129,10 +203,40 @@ const PostDetails = () => {
         <ul>
           {post.comments.map((comment) => (
             <li key={comment.id}>
-              <p>
-                <strong>{comment.user && comment.user.username ? comment.user.username : 'Anónimo'}:</strong> {comment.body}
-              </p>
-              <button onClick={() => handleDeleteComment(comment.id)}>Eliminar Comentario</button>
+              {editCommentId === comment.id ? (
+                <form onSubmit={handleEditComment}>
+                  <input
+                    type="text"
+                    value={editCommentName}
+                    onChange={(e) => setEditCommentName(e.target.value)}
+                    placeholder="Nombre"
+                    required
+                  />
+                  <input
+                    type="email"
+                    value={editCommentEmail}
+                    onChange={(e) => setEditCommentEmail(e.target.value)}
+                    placeholder="Correo electrónico"
+                    required
+                  />
+                  <textarea
+                    value={editCommentBody}
+                    onChange={(e) => setEditCommentBody(e.target.value)}
+                    placeholder="Escribe tu comentario aquí"
+                    required
+                  />
+                  <button type="submit">Guardar Cambios</button>
+                  <button type="button" onClick={() => setEditCommentId(null)}>Cancelar</button>
+                </form>
+              ) : (
+                <div>
+                  <p>
+                    <strong>{comment.user && comment.user.username ? comment.user.username : 'Anónimo'}:</strong> {comment.body}
+                  </p>
+                  <button onClick={() => { setEditCommentId(comment.id); setEditCommentBody(comment.body); setEditCommentName(comment.name); setEditCommentEmail(comment.email); }}>Editar Comentario</button>
+                  <button onClick={() => handleDeleteComment(comment.id)}>Eliminar Comentario</button>
+                </div>
+              )}
             </li>
           ))}
         </ul>
@@ -165,6 +269,6 @@ const PostDetails = () => {
       </form>
     </div>
   );
-};
+}
 
 export default PostDetails;

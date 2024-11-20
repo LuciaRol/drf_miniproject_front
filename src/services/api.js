@@ -208,3 +208,57 @@ export const deleteComment = async (token, commentId) => {
 };
 
 
+/* FUNCIÓN PARA EDITAR UN POST */
+export const editPost = async (token, postId, title, body) => {
+  try {
+    const response = await fetch(`${API_URL}/posts/${postId}/`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      },
+      body: JSON.stringify({ title, body })
+    });
+
+    if (!response.ok) {
+      const errorData = await response.json();
+      throw new Error(`Error al editar el post: ${JSON.stringify(errorData)}`);
+    }
+
+    const data = await response.json();
+    return data;  // Retornamos los datos del post editado
+
+  } catch (error) {
+    throw error;  // Lanzamos el error para que se maneje en otro lugar
+  }
+};
+
+
+/* FUNCIÓN PARA EDITAR UN COMENTARIO */
+export const editComment = async (token, commentId, body, name, email) => {
+  try {
+    const response = await fetch(`${API_URL}/comments/${commentId}/`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      },
+      body: JSON.stringify({ body, name, email })
+    });
+
+    if (!response.ok) {
+      const errorData = await response.json();
+      throw new Error(`Error al editar el comentario: ${JSON.stringify(errorData)}`);
+    }
+
+    const data = await response.json();
+    return data;  // Retornamos los datos del comentario editado
+
+  } catch (error) {
+    throw error;  // Lanzamos el error para que se maneje en otro lugar
+  }
+};
+
+
+
+
