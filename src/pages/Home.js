@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { fetchPosts } from '../services/api';  // Asegúrate de importar la función fetchPosts
+import Logout from '../components/Logout'; // Importa el componente Logout
 
 const Home = () => {
   const [posts, setPosts] = useState([]);
@@ -25,12 +26,6 @@ const Home = () => {
     }
   }, [navigate]);
 
-  const handleLogout = () => {
-    localStorage.removeItem('token');
-    localStorage.removeItem('username');
-    navigate('/login');
-  };
-
   if (loading) {
     return <div>Cargando...</div>;
   }
@@ -41,7 +36,6 @@ const Home = () => {
 
   return (
     <div>
-      <button onClick={handleLogout}>Logout</button>
       <h1>Lista de Posts</h1>
       {posts.length === 0 ? (
         <p>No hay posts disponibles.</p>

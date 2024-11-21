@@ -1,8 +1,19 @@
-// src/components/Header.js
 import React from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 
 const Header = () => {
+  const navigate = useNavigate();
+
+  // Verifica si el usuario está logeado
+  const isLoggedIn = localStorage.getItem('token') !== null;
+
+  // Maneja el logout
+  const handleLogout = () => {
+    localStorage.removeItem('token');
+    localStorage.removeItem('username');
+    navigate('/login');
+  };
+
   return (
     <header>
       <nav>
@@ -10,18 +21,29 @@ const Header = () => {
           <li style={styles.navItem}>
             <NavLink to="/" style={styles.navLink} activeStyle={styles.activeNavLink}>Home</NavLink>
           </li>
-          <li style={styles.navItem}>
-            <NavLink to="/login" style={styles.navLink} activeStyle={styles.activeNavLink}>Login</NavLink>
-          </li>
-          <li style={styles.navItem}>
-            <NavLink to="/register" style={styles.navLink} activeStyle={styles.activeNavLink}>Register</NavLink>
-          </li>
-          <li style={styles.navItem}> 
-            <NavLink to="/create-post" style={styles.navLink} activeStyle={styles.activeNavLink}>Create Post</NavLink> 
-          </li>
-          <li style={styles.navItem}>
-            <NavLink to="/profile" style={styles.navLink} activeStyle={styles.activeNavLink}>Profile</NavLink>
-          </li>
+          {!isLoggedIn && (
+            <>
+              <li style={styles.navItem}>
+                <NavLink to="/login" style={styles.navLink} activeStyle={styles.activeNavLink}>Login</NavLink>
+              </li>
+              <li style={styles.navItem}>
+                <NavLink to="/register" style={styles.navLink} activeStyle={styles.activeNavLink}>Register</NavLink>
+              </li>
+            </>
+          )}
+          {isLoggedIn && (
+            <>
+              <li style={styles.navItem}>
+                <NavLink to="/create-post" style={styles.navLink} activeStyle={styles.activeNavLink}>Create Post</NavLink>
+              </li>
+              <li style={styles.navItem}>
+                <NavLink to="/profile" style={styles.navLink} activeStyle={styles.activeNavLink}>Profile</NavLink>
+              </li>
+              <li style={styles.navItem}>
+                <button onClick={handleLogout} style={styles.logoutButton}>Logout</button>
+              </li>
+            </>
+          )}
         </ul>
       </nav>
     </header>
@@ -47,6 +69,13 @@ const styles = {
   },
   activeNavLink: {
     color: '#FFD700',  // Cambiar el color cuando está activo
+  },
+  logoutButton: {
+    backgroundColor: 'transparent',
+    color: 'white',
+    border: 'none',
+    fontSize: '18px',
+    cursor: 'pointer',
   },
 };
 
