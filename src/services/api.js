@@ -70,7 +70,6 @@ export const fetchPosts = async () => {
 };
 
 
-
 /* FUNCIÓN PARA CREAR UN POST */
 export const createPost = async (token, title, body) => {
   try {
@@ -233,6 +232,26 @@ export const editComment = async (token, commentId, body, name, email) => {
     throw error;  // Lanzamos el error para que se maneje en otro lugar
   }
 };
+
+/* PERFIL DE USUARIO */
+
+export const getUserDetails = async () => {
+  const token = localStorage.getItem('token');
+  const response = await fetch(`${API_URL}/user/`, {
+    headers: {
+      'Authorization': `Bearer ${token}`,
+    },
+  });
+
+  if (!response.ok) {
+    throw new Error('Error al obtener los detalles del usuario');
+  }
+
+  const data = await response.json();
+  return data;
+};
+
+
 
 
 
