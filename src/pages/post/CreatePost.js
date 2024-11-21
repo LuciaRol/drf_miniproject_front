@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { createPost } from '../../services/api';  // Importa la función createPost desde api.js
+import '../../css/create-post.css';  // Importa el archivo CSS
 
 const CreatePost = () => {
   const [title, setTitle] = useState('');
@@ -36,12 +37,12 @@ const CreatePost = () => {
 
   return (
     <div>
-      <h1>Crear Nuevo Post</h1>
-      
-      {error && <p style={{ color: 'red' }}>{error}</p>}
-      {success && <p style={{ color: 'green' }}>{success}</p>}
+      <form onSubmit={handleCreatePost} className="create-post-form">
+        <h1>Crear Nuevo Post</h1>
+        
+        {error && <p className="error">{error}</p>}
+        {success && <p className="success">{success}</p>}
 
-      <form onSubmit={handleCreatePost}>
         <label>Título</label>
         <input
           type="text"

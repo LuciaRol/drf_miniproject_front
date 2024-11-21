@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { login } from '../services/api';
 import { useNavigate } from 'react-router-dom';
 import Modal from 'react-modal';
+import '../css/login.css';  // Importa el archivo CSS
 
 // Establecer el contenedor de la app para el modal
 Modal.setAppElement('#root');
@@ -49,7 +50,7 @@ const Login = () => {
 
   return (
     <div>
-      <form onSubmit={handleLogin}>
+      <form onSubmit={handleLogin} className="login-form">
         <label>Username</label>
         <input
           type="text"
@@ -69,24 +70,12 @@ const Login = () => {
         </button>
       </form>
 
-      {error && <p style={{ color: 'red' }}>{error}</p>}
+      {error && <p>{error}</p>}
 
       <Modal
         isOpen={modalIsOpen}
         onRequestClose={closeModal}
         contentLabel="Welcome Modal"
-        style={{
-          overlay: {
-            backgroundColor: 'rgba(0, 0, 0, 0.5)',
-          },
-          content: {
-            backgroundColor: '#fff',
-            padding: '20px',
-            borderRadius: '10px',
-            width: '300px',
-            margin: 'auto',
-          },
-        }}
       >
         <h2>Bienvenido, {user}!</h2>
         <p>Has iniciado sesión correctamente.</p>

@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import '../css/register.css';  // Importar el archivo CSS
 
 const Register = () => {
   const [username, setUsername] = useState('');
@@ -40,7 +41,7 @@ const Register = () => {
 
   return (
     <div>
-      <form onSubmit={handleRegister}>
+      <form onSubmit={handleRegister} className="register-form">
         <label>Username</label>
         <input
           type="text"
@@ -65,8 +66,8 @@ const Register = () => {
         <button type="submit">Register</button>
       </form>
 
-      {error && <p style={{ color: 'red' }}>{error}</p>}
-      {success && <p style={{ color: 'green' }}>{success}</p>}
+      {error && <p className="error">{error}</p>}
+      {success && <p className="success">{success}</p>}
     </div>
   );
 };

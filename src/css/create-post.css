@@ -1,0 +1,66 @@
+/* Estilos para el formulario de creación de post */
+.create-post-form {
+    display: flex;
+    flex-direction: column;
+    width: 400px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .create-post-form h1 {
+    text-align: center;
+    font-size: 24px;
+    margin-bottom: 20px;
+  }
+  
+  .create-post-form label {
+    font-size: 16px;
+    margin-bottom: 5px;
+  }
+  
+  .create-post-form input,
+  .create-post-form textarea {
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+    width: 100%;
+  }
+  
+  .create-post-form textarea {
+    height: 150px;
+    resize: vertical;
+  }
+  
+  .create-post-form button {
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    background-color: #4CAF50;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .create-post-form button:hover {
+    background-color: #45a049;
+  }
+  
+  .create-post-form p {
+    font-size: 14px;
+    text-align: center;
+  }
+  
+  .create-post-form p.error {
+    color: red;
+  }
+  
+  .create-post-form p.success {
+    color: green;
+  }
+  

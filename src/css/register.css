@@ -1,0 +1,48 @@
+/* Estilos para el formulario de registro */
+.register-form {
+    display: flex;
+    flex-direction: column;
+    width: 300px;
+    margin: auto;
+  }
+  
+  .register-form label {
+    margin-bottom: 5px;
+    font-size: 16px;
+  }
+  
+  .register-form input {
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+  }
+  
+  .register-form button {
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    background-color: #333;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+  }
+  
+  .register-form button:disabled {
+    background-color: #aaa;
+    cursor: not-allowed;
+  }
+  
+  .register-form p {
+    color: red;
+    font-size: 14px;
+    text-align: center;
+  }
+  
+  .register-form p.success {
+    color: green;
+    font-size: 14px;
+    text-align: center;
+  }
+  

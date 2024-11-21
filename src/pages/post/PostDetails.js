@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { fetchPostDetails, addComment, deletePost, deleteComment, editPost, editComment } from '../../services/api';
+import '../../css/details-post.css'; // Importa los estilos
 
 const PostDetails = () => {
   const { postId } = useParams();
@@ -62,7 +63,7 @@ const PostDetails = () => {
       // Actualizar los comentarios del post
       setPost((prevPost) => ({
         ...prevPost,
-        comments: [...prevPost.comments, { ...data, name }], // Agregar el nombre en los comentarios
+        comments: [...prevPost.comments, { ...data, name }],
       }));
     } catch (error) {
       console.error('Error al añadir el comentario:', error);
@@ -119,7 +120,7 @@ const PostDetails = () => {
       setPost((prevPost) => ({
         ...prevPost,
         title: updatedPost.title,
-        body: updatedPost.body
+        body: updatedPost.body,
       }));
       setEditMode(false);
     } catch (error) {
@@ -155,21 +156,21 @@ const PostDetails = () => {
   };
 
   if (loading) {
-    return <div>Cargando...</div>;
+    return <div className="loading">Cargando...</div>;
   }
 
   if (error) {
-    return <div>Error: {error}</div>;
+    return <div className="error">Error: {error}</div>;
   }
 
   if (!post) {
-    return <div>Post no encontrado.</div>;
+    return <div className="error">Post no encontrado.</div>;
   }
 
   return (
-    <div>
+    <div className="post-details-container">
       {editMode ? (
-        <div>
+        <div className="edit-post-form">
           <input
             type="text"
             value={editPostTitle}
@@ -187,7 +188,7 @@ const PostDetails = () => {
           <button onClick={() => setEditMode(false)}>Cancelar</button>
         </div>
       ) : (
-        <div>
+        <div className="post-info">
           <h1>{post.title}</h1>
           <p>{post.body}</p>
           <p><strong>Autor:</strong> {post.username}</p>
@@ -196,74 +197,75 @@ const PostDetails = () => {
           <button onClick={handleDeletePost}>Eliminar Post</button>
         </div>
       )}
-      <h2>Comentarios</h2>
-      {post.comments.length === 0 ? (
-        <p>No hay comentarios disponibles.</p>
-      ) : (
-        <ul>
-          {post.comments.sort((a, b) => new Date(b.created_at) - new Date(a.created_at)).map((comment) => (
-            <li key={comment.id}>
-              {editCommentId === comment.id ? (
-                <form onSubmit={handleEditComment}>
-                  <input
-                    type="text"
-                    value={editCommentName}
-                    onChange={(e) => setEditCommentName(e.target.value)}
-                    placeholder="Nombre"
-                    required
-                  />
-                  <textarea
-                    value={editCommentBody}
-                    onChange={(e) => setEditCommentBody(e.target.value)}
-                    placeholder="Escribe tu comentario aquí"
-                    required
-                  />
-                  <button type="submit">Guardar Cambios</button>
-                  <button type="button" onClick={() => setEditCommentId(null)}>Cancelar</button>
-                </form>
-              ) : (
-                <div>
-                  <p>
-                    <strong>{comment.name || 'Anónimo'}:</strong> {comment.body}
-                  </p>
-                  {comment.email && <p><strong>Correo electrónico:</strong> {comment.email}</p>}
-                  <p><em>{new Date(comment.created_at).toLocaleString()}</em></p>
-                  <button onClick={() => { 
-                    setEditCommentId(comment.id); 
-                    setEditCommentBody(comment.body); 
-                    setEditCommentName(comment.name); 
-                  }}>Editar Comentario</button>
-                  <button onClick={() => handleDeleteComment(comment.id)}>Eliminar Comentario</button>
-                </div>
-              )}
-            </li>
-          ))}
-        </ul>
-      )}
-      <h3>Añadir un comentario</h3>
-      {commentError && <p style={{ color: 'red' }}>{commentError}</p>}
-      {commentSuccess && <p style={{ color: 'green' }}>{commentSuccess}</p>}
-      <form onSubmit={handleCommentSubmit}>
-        <input
-          type="text"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-          placeholder="Nombre"
-          required
-        />
-        <textarea
-          value={comment}
-          onChange={(e) => setComment(e.target.value)}
-          placeholder="Escribe tu comentario aquí"
-          required
-        />
-        <button type="submit">Añadir Comentario</button>
-      </form>
+      <div className="comments-section">
+        <h2>Comentarios</h2>
+        {post.comments.length === 0 ? (
+          <p>No hay comentarios disponibles.</p>
+        ) : (
+          <ul>
+            {post.comments.sort((a, b) => new Date(b.created_at) - new Date(a.created_at)).map((comment) => (
+              <li key={comment.id}>
+                {editCommentId === comment.id ? (
+                  <form onSubmit={handleEditComment}>
+                    <input
+                      type="text"
+                      value={editCommentName}
+                      onChange={(e) => setEditCommentName(e.target.value)}
+                      placeholder="Nombre"
+                      required
+                    />
+                    <textarea
+                      value={editCommentBody}
+                      onChange={(e) => setEditCommentBody(e.target.value)}
+                      placeholder="Escribe tu comentario aquí"
+                      required
+                    />
+                    <button type="submit">Guardar Cambios</button>
+                    <button type="button" onClick={() => setEditCommentId(null)}>Cancelar</button>
+                  </form>
+                ) : (
+                  <div>
+                    <p>
+                      <strong>{comment.name || 'Anónimo'}:</strong> {comment.body}
+                    </p>
+                    {comment.email && <p><strong>Correo electrónico:</strong> {comment.email}</p>}
+                    <p><em>{new Date(comment.created_at).toLocaleString()}</em></p>
+                    <button onClick={() => { 
+                      setEditCommentId(comment.id); 
+                      setEditCommentBody(comment.body); 
+                      setEditCommentName(comment.name); 
+                    }}>Editar Comentario</button>
+                    <button onClick={() => handleDeleteComment(comment.id)}>Eliminar Comentario</button>
+                  </div>
+                )}
+              </li>
+            ))}
+          </ul>
+        )}
+      </div>
+      <div className="comment-form">
+        <h3>Añadir un comentario</h3>
+        {commentError && <p className="error-message">{commentError}</p>}
+        {commentSuccess && <p className="success-message">{commentSuccess}</p>}
+        <form onSubmit={handleCommentSubmit}>
+          <input
+            type="text"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            placeholder="Nombre"
+            required
+          />
+          <textarea
+            value={comment}
+            onChange={(e) => setComment(e.target.value)}
+            placeholder="Escribe tu comentario aquí"
+            required
+          />
+          <button type="submit">Añadir Comentario</button>
+        </form>
+      </div>
     </div>
   );
-  
-
-};  
-
+};
 
 export default PostDetails;

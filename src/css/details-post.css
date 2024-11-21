@@ -1,0 +1,101 @@
+.post-details-container {
+    padding: 20px;
+  }
+  
+  .loading,
+  .error {
+    color: red;
+    text-align: center;
+  }
+  
+  .post-info {
+    margin-bottom: 20px;
+  }
+  
+  .post-info h1 {
+    font-size: 2rem;
+    margin-bottom: 10px;
+  }
+  
+  .post-info p {
+    font-size: 1.2rem;
+    line-height: 1.5;
+  }
+  
+  button {
+    background-color: #007bff;
+    color: white;
+    padding: 10px;
+    border: none;
+    cursor: pointer;
+    margin: 5px;
+    border-radius: 5px;
+  }
+  
+  button:hover {
+    background-color: #0056b3;
+  }
+  
+  .comments-section {
+    margin-top: 20px;
+  }
+  
+  .comment-form {
+    margin-top: 20px;
+  }
+  
+  .comment-form input,
+  .comment-form textarea {
+    width: 100%;
+    padding: 10px;
+    margin: 5px 0;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+  }
+  
+  .comment-form button {
+    background-color: #28a745;
+  }
+  
+  .comment-form button:hover {
+    background-color: #218838;
+  }
+  
+  .comment-form .error-message,
+  .comment-form .success-message {
+    color: red;
+    font-size: 0.9rem;
+  }
+  
+  .comments-section ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .comments-section li {
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  .comments-section li p {
+    font-size: 1rem;
+  }
+  
+  .edit-post-form input,
+  .edit-post-form textarea {
+    width: 100%;
+    padding: 10px;
+    margin: 5px 0;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+  }
+  
+  .edit-post-form button {
+    background-color: #007bff;
+  }
+  
+  .edit-post-form button:hover {
+    background-color: #0056b3;
+  }
+  
