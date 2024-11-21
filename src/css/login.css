@@ -1,76 +1,100 @@
-@import url('./normalize.css');
+/* Estilos generales */
+.login-form-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: var(--background-color);
+}
 
-/* Estilos para el formulario de login */
 .login-form {
-    display: flex;
-    flex-direction: column;
-    width: 300px;
-    margin: auto;
-  }
+  display: flex;
+  flex-direction: column;
+  width: 300px;
+  padding: 20px;
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.login-form h1 {
+  text-align: center;
+  font-size: 24px;
+  color: var(--primary-color1);
+  margin-bottom: 20px;
+  font-weight: bold;
+}
+
+/* Otros estilos para el formulario */
+.login-form label {
+  margin-bottom: 5px;
+  font-size: 16px;
+}
+
+.login-form input {
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
+}
+
+.login-form button {
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  background-color: var(--primary-color1);
+  color: var(--text-color);
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.login-form button:hover {
+  background-color: var(--primary-color2);
   
-  .login-form label {
-    margin-bottom: 5px;
-    font-size: 16px;
-  }
-  
-  .login-form input {
-    padding: 10px;
-    margin-bottom: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    font-size: 16px;
-  }
-  
-  .login-form button {
-    padding: 10px;
-    border: none;
-    border-radius: 5px;
-    background-color: #333;
-    color: white;
-    font-size: 16px;
-    cursor: pointer;
-  }
-  
-  .login-form button:disabled {
-    background-color: #aaa;
-    cursor: not-allowed;
-  }
-  
-  .login-form p {
-    color: red;
-    font-size: 14px;
-    text-align: center;
-  }
-  
-  /* Estilos para el modal de bienvenida */
-  .ReactModal__Overlay {
-    background-color: rgba(0, 0, 0, 0.5);
-  }
-  
-  .ReactModal__Content {
-    background-color: #fff;
-    padding: 20px;
-    border-radius: 10px;
-    width: 300px;
-    margin: auto;
-  }
-  
-  .ReactModal__Content h2 {
-    margin: 0;
-    font-size: 18px;
-  }
-  
-  .ReactModal__Content button {
-    margin-top: 10px;
-    background-color: #333;
-    color: white;
-    padding: 10px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-  }
-  
-  .ReactModal__Content button:hover {
-    background-color: #555;
-  }
-  
+}
+
+.login-form button:disabled {
+  background-color: #aaa;
+  cursor: not-allowed;
+}
+
+.login-form p {
+  color: red;
+  font-size: 14px;
+  text-align: center;
+}
+
+/* Estilos para el modal de bienvenida */
+.ReactModal__Overlay {
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 10;
+}
+
+.ReactModal__Content {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  width: 300px;
+  margin: auto;
+}
+
+.ReactModal__Content h2 {
+  margin: 0;
+  font-size: 18px;
+}
+
+.ReactModal__Content button {
+  margin-top: 10px;
+  background-color: var(--primary-color1);
+  color: white;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.ReactModal__Content button:hover {
+  background-color: var(--primary-color2);
+}

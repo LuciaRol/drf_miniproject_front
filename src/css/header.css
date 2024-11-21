@@ -2,16 +2,16 @@
 
 nav {
     background-color: var(--primary-color1);
-    padding: 0 20px;  /* Espacio a la izquierda y derecha de la barra de navegación */
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);  /* Sombra en el borde inferior */
-    position: sticky;  /* Hace que la barra de navegación se quede fija */
-    top: 0;  /* Se mantiene en la parte superior */
-    left: 0;  /* Alinea la barra al borde izquierdo */
-    width: 100%;  /* Hace que ocupe todo el ancho de la pantalla */
-    /* z-index: 1000; */  /* Asegura que la barra esté por encima de otros elementos */
-    height: 60px;  /* Altura fija para la barra de navegación */
+    padding: 0 20px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 5;
+    height: 60px;
     display: flex;
-    align-items: center;  /* Alinea los elementos verticalmente al centro */
+    align-items: center;
 }
 
 .navList {
@@ -19,58 +19,58 @@ nav {
     display: flex;
     margin: 0;
     padding: 0;
-    justify-content: flex-end;  /* Alinea todos los elementos hacia la derecha */
-    align-items: center;  /* Alinea verticalmente al centro */
-    width: 100%;  /* Asegura que la lista ocupe todo el ancho del contenedor */
+    justify-content: flex-end;
+    align-items: center;
+    width: 100%;
 }
 
 .navItem {
-    margin: 0 10px;  /* Espacio entre los elementos */
-    position: relative;  /* Necesario para el posicionamiento de las líneas */
+    margin: 0 10px;
+    position: relative;
 }
 
 .navLink {
     color: var(--text-color);
     text-decoration: none;
     font-size: 18px;
-    position: relative;  /* Necesario para el posicionamiento de las líneas */
+    position: relative;
 }
 
 .navLink::after,
 .navLink::before {
-    content: '';  /* Necesario para generar un elemento */
+    content: '';
     position: absolute;
-    height: 2px;  /* Altura de la línea */
-    background-color: black;  /* Color de la línea */
-    transition: width 0.3s ease;  /* Transición para animar el ancho */
+    height: 2px;
+    background-color: black;
+    transition: width 0.3s ease;
 }
 
 .navLink::after {
     left: 0;
-    bottom: 0;  /* Línea inferior */
-    width: 0;  /* Empieza con un ancho de 0 */
+    bottom: 0;
+    width: 0;
 }
 
 .navLink::before {
     right: 0;
-    top: 0;  /* Línea superior */
-    width: 0;  /* Empieza con un ancho de 0 */
+    top: 0;
+    width: 0;
 }
 
 .navLink:hover::after {
-    width: 100%;  /* La línea inferior se expandirá de izquierda a derecha */
+    width: 100%;
 }
 
 .navLink:hover::before {
-    width: 100%;  /* La línea superior se expandirá de derecha a izquierda */
+    width: 100%;
 }
 
 .navLink:hover {
-    color: black;  /* Color dorado cuando el enlace es hover */
+    color: black;
 }
 
 .activeNavLink {
-    color: black;  /* Color dorado cuando el enlace está activo */
+    color: black;
 }
 
 .logoutButton {
@@ -80,9 +80,9 @@ nav {
     font-size: 18px;
     cursor: pointer;
     display: flex;
-    align-items: center;  /* Alinea el texto del botón al centro */
-    padding: 10px 20px;  /* Añadido para un mejor tamaño de botón */
-    transition: background-color 0.3s ease, color 0.3s ease;  /* Transición de color de fondo */
+    align-items: center;
+    padding: 10px 20px;
+    transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 .logoutButton:hover {
