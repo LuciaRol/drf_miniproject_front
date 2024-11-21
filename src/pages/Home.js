@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import { fetchPosts } from '../services/api';  // Asegúrate de importar la función fetchPosts
-import Logout from '../components/Logout'; // Importa el componente Logout
+import { fetchPosts } from '../services/api';
 
 const Home = () => {
   const [posts, setPosts] = useState([]);
@@ -10,15 +9,16 @@ const Home = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
+    // Verificar si el token está presente, si no, redirigir al login
     if (!localStorage.getItem('token')) {
       navigate('/login');
     } else {
       fetchPosts()
-        .then(data => {
+        .then((data) => {
           setPosts(data);
           setLoading(false);
         })
-        .catch(error => {
+        .catch((error) => {
           console.error('Error al obtener los posts:', error);
           setError(error.message);
           setLoading(false);

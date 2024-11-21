@@ -23,9 +23,7 @@ const Header = () => {
           </li>
           {!isLoggedIn && (
             <>
-              <li style={styles.navItem}>
-                <NavLink to="/login" style={styles.navLink} activeStyle={styles.activeNavLink}>Login</NavLink>
-              </li>
+              
               <li style={styles.navItem}>
                 <NavLink to="/register" style={styles.navLink} activeStyle={styles.activeNavLink}>Register</NavLink>
               </li>
