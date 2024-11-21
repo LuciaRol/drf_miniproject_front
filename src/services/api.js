@@ -46,54 +46,29 @@ export const register = async (username, email, password) => {
   }
 };
 
-/* FUNCIÓN PARA OBTENER EL PERFIL DEL USUARIO */
-export const fetchProfile = async (token, userId) => {
+
+/* FUNCIÓN PARA OBTENER POSTS */
+
+export const fetchPosts = async () => {
   try {
-    const response = await fetch(`${API_URL}/profile/${userId}/`, {
-      method: 'GET',
+    const response = await fetch(`${API_URL}/posts/`, {
       headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${token}`
+        'Authorization': `Bearer ${localStorage.getItem('token')}`
       }
     });
 
     if (!response.ok) {
-      throw new Error('Error al obtener el perfil');
+      throw new Error('Error al obtener los posts');
     }
 
     const data = await response.json();
-    return data;  // Retornamos los datos del perfil
+    return data;
 
   } catch (error) {
-    throw error;  // Lanzamos el error para que se maneje en otro lugar
+    throw error;
   }
 };
 
-/* FUNCIÓN PARA ACTUALIZAR EL PERFIL DEL USUARIO */
-export const updateProfile = async (token, userId, username, email, password) => {
-  try {
-    const response = await fetch(`${API_URL}/profile/${userId}/`, {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${token}`
-      },
-      body: JSON.stringify({ username, email, password })
-    });
-
-    if (!response.ok) {
-      throw new Error('Error al actualizar el perfil');
-    }
-
-    const data = await response.json();
-    return data;  // Retornamos los datos actualizados del perfil
-
-  } catch (error) {
-    throw error;  // Lanzamos el error para que se maneje en otro lugar
-  }
-};
-
-/* FUNCIÓN PARA OBTENER POSTS */
 
 
 /* FUNCIÓN PARA CREAR UN POST */

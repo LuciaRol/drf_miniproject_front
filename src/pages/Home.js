@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-
-const API_URL = 'http://127.0.0.1:8000/posts/';
+import { fetchPosts } from '../services/api';  // Asegúrate de importar la función fetchPosts
 
 const Home = () => {
   const [posts, setPosts] = useState([]);
@@ -9,33 +8,20 @@ const Home = () => {
   const [error, setError] = useState(null);
   const navigate = useNavigate();
 
-  const fetchPosts = async () => {
-    try {
-      const response = await fetch(API_URL, {
-        headers: {
-          'Authorization': `Bearer ${localStorage.getItem('token')}`
-        }
-      });
-
-      if (!response.ok) {
-        throw new Error('Error al obtener los posts');
-      }
-
-      const data = await response.json();
-      setPosts(data);
-      setLoading(false);
-    } catch (error) {
-      console.error('Error al obtener los posts:', error);
-      setError(error.message);
-      setLoading(false);
-    }
-  };
-
   useEffect(() => {
     if (!localStorage.getItem('token')) {
       navigate('/login');
     } else {
-      fetchPosts();
+      fetchPosts()
+        .then(data => {
+          setPosts(data);
+          setLoading(false);
+        })
+        .catch(error => {
+          console.error('Error al obtener los posts:', error);
+          setError(error.message);
+          setLoading(false);
+        });
     }
   }, [navigate]);
 
@@ -67,7 +53,6 @@ const Home = () => {
                 <Link to={`/posts/${post.id}`}>{post.title}</Link>
               </h2>
               <p>{post.body}</p>
-              {/* <p><strong>ID del Usuario:</strong> {post.user_id}</p> */}
               <p><strong>Autor:</strong> {post.username}</p>
               <p><strong>Creado en:</strong> {new Date(post.created_at).toLocaleString()}</p>
               <p><strong>Número de comentarios:</strong> {post.comments_count != null ? post.comments_count : '0'}</p>
