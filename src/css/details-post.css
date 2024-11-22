@@ -23,8 +23,8 @@
   }
   
   button {
-    background-color: #007bff;
-    color: white;
+    background-color: var(--primary-color1);;
+    color: var(--text-color);
     padding: 10px;
     border: none;
     cursor: pointer;
@@ -33,7 +33,7 @@
   }
   
   button:hover {
-    background-color: #0056b3;
+    background-color: var(--primary-color2);
   }
   
   .comments-section {
@@ -54,16 +54,17 @@
   }
   
   .comment-form button {
-    background-color: #28a745;
+    background-color: var(--primary-color3);
+    color: var(--text-color);
   }
   
   .comment-form button:hover {
-    background-color: #218838;
+    background-color: var(--accent-color);  
   }
   
   .comment-form .error-message,
   .comment-form .success-message {
-    color: red;
+    color: green;
     font-size: 0.9rem;
   }
   
@@ -92,10 +93,11 @@
   }
   
   .edit-post-form button {
-    background-color: #007bff;
+    background-color: var(--primary-color1);
+    color: var(--text-color);
   }
   
   .edit-post-form button:hover {
-    background-color: #0056b3;
+    background-color: var(--primary-color2);
   }
   

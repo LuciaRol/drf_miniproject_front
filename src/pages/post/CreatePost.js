@@ -38,7 +38,7 @@ const CreatePost = () => {
   return (
     <div>
       <form onSubmit={handleCreatePost} className="create-post-form">
-        <h1>Crear Nuevo Post</h1>
+        <h1>Nuevo post</h1>
         
         {error && <p className="error">{error}</p>}
         {success && <p className="success">{success}</p>}
@@ -56,7 +56,7 @@ const CreatePost = () => {
           value={body}
           onChange={(e) => setBody(e.target.value)}
         />
-        <button type="submit">Crear Post</button>
+        <button type="submit">Publicar</button>
       </form>
     </div>
   );
