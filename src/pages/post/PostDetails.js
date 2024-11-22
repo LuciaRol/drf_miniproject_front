@@ -192,7 +192,7 @@ const PostDetails = () => {
           <h1>{post.title}</h1>
           <p>{post.body}</p>
           <p><strong>Autor:</strong> {post.username}</p>
-          <p><em>Creado en:</em> {new Date(post.created_at).toLocaleString()}</p>
+          <p><em>{new Date(post.created_at).toLocaleString()}</em></p>
           <button onClick={() => { setEditMode(true); setEditPostTitle(post.title); setEditPostBody(post.body); }}>Editar Post</button>
           <button onClick={handleDeletePost}>Eliminar Post</button>
         </div>

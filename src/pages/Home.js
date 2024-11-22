@@ -50,7 +50,7 @@ const Home = () => {
 
   return (
     <div className="home-container">
-      <h1 className="page-title">Publicaciones</h1>
+      <h1 className="page-title">Últimas publicaciones</h1>
       {posts.length === 0 ? (
         <p className="no-posts">No hay posts disponibles.</p>
       ) : (

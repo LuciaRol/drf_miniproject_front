@@ -33,9 +33,6 @@ const Header = () => {
                 <NavLink to="/create-post" className="navLink" activeClassName="activeNavLink">Create Post</NavLink>
               </li>
               <li className="navItem">
-                <NavLink to="/profile" className="navLink" activeClassName="activeNavLink">Profile</NavLink>
-              </li>
-              <li className="navItem">
                 <button onClick={handleLogout} className="logoutButton">Logout</button>
               </li>
             </>

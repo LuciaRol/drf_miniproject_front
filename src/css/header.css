@@ -4,11 +4,11 @@ nav {
     background-color: var(--primary-color1);
     padding: 0 20px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    position: fixed;
+    position: sticky;
     top: 0;
     left: 0;
     width: 100%;
-    z-index: 5;
+    /* z-index: 5; */
     height: 60px;
     display: flex;
     align-items: center;

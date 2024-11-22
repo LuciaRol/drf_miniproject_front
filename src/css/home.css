@@ -6,6 +6,7 @@
     font-size: 2rem;
     margin-bottom: 20px;
     text-align: center;
+    color: var(--primary-color1);
   }
   
   .loading,
@@ -45,7 +46,7 @@
   }
   
   .post-title a {
-    color: #007bff;
+    color: var(--primary-color-dark);
     text-decoration: none;
   }
   
@@ -98,16 +99,24 @@
   .pagination button {
     padding: 5px 10px;
     cursor: pointer;
+    background-color: var(--primary-color2);
+    color: var(--text-color);
+  }
+
+  .pagination button:hover {
+    background-color: var(--primary-color3);
+    
   }
   
   .pagination button:disabled {
     cursor: not-allowed;
     background-color: #ddd;
+    color: var(--background-color);
   }
   
   .pagination button.active {
     font-weight: bold;
-    background-color: #007bff;
-    color: white;
+    background-color: var(--primary-color3);
+    color: var(--text-color);
   }
   
