@@ -4,6 +4,7 @@ import Header from './components/Header';
 import Home from './pages/Home';
 import Login from './pages/Login';
 import Register from './pages/Register';
+import Users from './pages/Users';
 import CreatePost from './pages/post/CreatePost'
 import PostDetails from './pages/post/PostDetails';
 
@@ -20,7 +21,8 @@ function App() {
         <Route path="/" element={<PrivateRoute element={<Home />} />} />
         <Route path="/home" element={<PrivateRoute element={<Home />} />} />
         <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />} /> {/* Asegúrate de tener esta línea */} 
+        <Route path="/register" element={<Register />} />
+        <Route path="/users" element={<PrivateRoute element={<Users />} />} />  
         <Route path="/create-post" element={<PrivateRoute element={<CreatePost />} />} />
         <Route path="/posts/:postId" element={<PrivateRoute element={<PostDetails />} />} />  
       </Routes>

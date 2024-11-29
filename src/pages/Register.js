@@ -63,7 +63,7 @@ const Register = () => {
           value={password}
           onChange={(e) => setPassword(e.target.value)}
         />
-        <button type="submit">Register</button>
+        <button type="submit">Regístrate</button>
       </form>
 
       {error && <p className="error">{error}</p>}

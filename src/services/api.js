@@ -234,6 +234,7 @@ export const editComment = async (token, commentId, body, name, email) => {
 };
 
 /* PERFIL DE USUARIO */
+/* ESTO NO SE ESTÁ USANDO DE MOMENTO */
 
 export const getUserDetails = async () => {
   const token = localStorage.getItem('token');
@@ -250,6 +251,26 @@ export const getUserDetails = async () => {
   const data = await response.json();
   return data;
 };
+
+/* MOSTRAR LISTADO DE USUARIOS */
+
+export const getUsers = async () => {
+  const token = localStorage.getItem('token');
+  const response = await fetch(`${API_URL}/users/`, {
+    headers: {
+      'Authorization': `Bearer ${token}`,
+    },
+  });
+
+  if (!response.ok) {
+    throw new Error('Error al obtener los usuarios');
+  }
+
+  const data = await response.json();
+  return data;
+};
+
+
 
 
 
